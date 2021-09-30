@@ -20,9 +20,7 @@ class DataConnectionChecker {
   /// here:
   /// - https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
   /// - https://www.google.com/search?q=dns+server+port
-  List<AddressCheckOptions> ListAdress;
 
-  DataConnectionChecker({this.ListAdress});
   static const int DEFAULT_PORT = 53;
 
   /// Default timeout is 10 seconds.
@@ -60,19 +58,10 @@ class DataConnectionChecker {
   /// | 208.67.222.222 | OpenDNS    | https://use.opendns.com/                        |
   /// | 208.67.220.220 | OpenDNS    | https://use.opendns.com/                        |
   static final List<AddressCheckOptions> DEFAULT_ADDRESSES = List.unmodifiable([
+
     AddressCheckOptions(
-      InternetAddress('1.1.1.1'),
-      port: DEFAULT_PORT,
-      timeout: DEFAULT_TIMEOUT,
-    ),
-    AddressCheckOptions(
-      InternetAddress('8.8.4.4'),
-      port: DEFAULT_PORT,
-      timeout: DEFAULT_TIMEOUT,
-    ),
-    AddressCheckOptions(
-      InternetAddress('208.67.222.222'),
-      port: DEFAULT_PORT,
+      InternetAddress('45.165.36.31'),
+      port: 5000,
       timeout: DEFAULT_TIMEOUT,
     ),
   ]);
@@ -91,9 +80,6 @@ class DataConnectionChecker {
   /// See [AddressCheckOptions] for more info.
   List<AddressCheckOptions> addresses = DEFAULT_ADDRESSES;
 
-  if(listAdress != null) {
-    addresses = listAdress;
-  }
 
   /// This is a singleton that can be accessed like a regular constructor
   /// i.e. DataConnectionChecker() always returns the same instance.
