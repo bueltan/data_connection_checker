@@ -27,12 +27,12 @@ class DataConnectionChecker {
   ///
   /// Timeout is the number of seconds before a request is dropped
   /// and an address is considered unreachable
-  static const Duration DEFAULT_TIMEOUT = const Duration(seconds: 10);
+  static const Duration DEFAULT_TIMEOUT = const Duration(milliseconds: 250);
 
   /// Default interval is 10 seconds
   ///
   /// Interval is the time between automatic checks
-  static const Duration DEFAULT_INTERVAL = const Duration(seconds: 10);
+  static const Duration DEFAULT_INTERVAL = const Duration(milliseconds: 500);
 
   /// Predefined reliable addresses. This is opinionated
   /// but should be enough. See https://www.dnsperf.com/#!dns-resolvers
