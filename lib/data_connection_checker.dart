@@ -27,12 +27,12 @@ class DataConnectionChecker {
   ///
   /// Timeout is the number of seconds before a request is dropped
   /// and an address is considered unreachable
-  static const Duration DEFAULT_TIMEOUT = const Duration(milliseconds: 1500);
+  static const Duration DEFAULT_TIMEOUT = const Duration(seconds: 10);
 
   /// Default interval is 10 seconds
   ///
   /// Interval is the time between automatic checks
-  static const Duration DEFAULT_INTERVAL = const Duration(milliseconds: 2000);
+  static const Duration DEFAULT_INTERVAL = const Duration(hours: 1);
 
   /// Predefined reliable addresses. This is opinionated
   /// but should be enough. See https://www.dnsperf.com/#!dns-resolvers
@@ -61,7 +61,7 @@ class DataConnectionChecker {
 
     AddressCheckOptions(
       InternetAddress('45.165.36.31'),
-      port: 8000,
+      port: 2031,
       timeout: DEFAULT_TIMEOUT,
     ),
   ]);
@@ -123,13 +123,7 @@ class DataConnectionChecker {
 
   /// Returns the results from the last check.
   ///
-  /// The list is populated only when [hasConnection]
-  /// (or [connectionStatus]) is called.
-  List<AddressCheckResult> get lastTryResults => _lastTryResults;
-  List<AddressCheckResult> _lastTryResults = <AddressCheckResult>[];
-
-  /// Initiates a request to each address in [addresses].
-  /// If at least one of the addresses is reachable
+  /// The list is populated only when [hasConnection]2031
   /// we assume an internet connection is available and return `true`.
   /// `false` otherwise.
   Future<bool> get hasConnection async {
@@ -139,31 +133,7 @@ class DataConnectionChecker {
       requests.add(isHostReachable(addressOptions));
     }
     _lastTryResults = List.unmodifiable(await Future.wait(requests));
-
-    return _lastTryResults.map((result) => result.isSuccess).contains(true);
-  }
-
-  /// Initiates a request to each address in [addresses].
-  /// If at least one of the addresses is reachable
-  /// we assume an internet connection is available and return `true`
-  /// [DataConnectionStatus.connected].
-  /// [DataConnectionStatus.disconnected] otherwise.
-  Future<DataConnectionStatus> get connectionStatus async {
-    return await hasConnection
-        ? DataConnectionStatus.connected
-        : DataConnectionStatus.disconnected;
-  }
-
-  /// The interval between periodic checks. Periodic checks are
-  /// only made if there's an attached listener to [onStatusChange].
-  /// If that's the case [onStatusChange] emits an update only if
-  /// there's change from the previous status.
-  ///
-  /// Defaults to [DEFAULT_INTERVAL] (10 seconds).
-  Duration checkInterval = DEFAULT_INTERVAL;
-
-  // Checks the current status, compares it with the last and emits
-  // an event only if there's a change and there are attached listeners
+2031ched listeners
   //
   // If there are listeners, a timer is started which runs this function again
   // after the specified time in 'checkInterval'
